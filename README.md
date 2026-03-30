@@ -46,11 +46,11 @@ _Production-ready starting points with pre-configured DevSecOps, Docker Swarm, a
 
 - [**php-template-mezzio**](https://github.com/tomaschochola/php-template-mezzio)
   Enterprise-grade middleware application structure for complex APIs.
-- [**php-template-quickmux**](https://github.com/tomaschochola/php-template-quickmux)
+- [**template-php-quickmux**](https://github.com/tomaschochola/template-php-quickmux)
   Minimalist microservice foundation for latency-critical applications.
-- [**php-template-library**](https://github.com/tomaschochola/php-template-library)
+- [**template-php-library**](https://github.com/tomaschochola/template-php-library)
   Standardized structure for developing strictly typed PHP packages.
-- [**php-template-project**](https://github.com/tomaschochola/php-template-project)
+- [**template-php-project**](https://github.com/tomaschochola/template-php-project)
   Generic, high-performance CLI/Worker environment foundation.
 
 ### 04. Quality Assurance Tooling
