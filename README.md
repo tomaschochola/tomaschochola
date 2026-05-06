@@ -60,7 +60,7 @@ _Centralized enforcement of engineering standards._
 - [**php-tooling-phpstan-config**](https://github.com/tomaschochola/php-tooling-phpstan-config)
   Maximum strictness static analysis configuration (PHP 8.5+).
 - [**php-tooling-php-cs-fixer-config**](https://github.com/tomaschochola/php-tooling-php-cs-fixer-config)
-  Opinionated codestyle enforcement for backend services.
+  Strict codestyle policy enforcement for backend services.
 - [**ts-tooling-eslint-config**](https://github.com/tomaschochola/ts-tooling-eslint-config)
   Strict static analysis ruleset for TypeScript and React ecosystems.
 - [**ts-tooling-prettier-config**](https://github.com/tomaschochola/ts-tooling-prettier-config)
