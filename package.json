@@ -1,0 +1,40 @@
+{
+  "author": {
+    "email": "tomaschochola@tomaschochola.cz",
+    "name": "Tomáš Chochola",
+    "url": "https://github.com/tomaschochola"
+  },
+  "bugs": {
+    "email": "tomaschochola@tomaschochola.cz",
+    "url": "https://github.com/tomaschochola/tomaschochola/issues"
+  },
+  "contributors": [
+    {
+      "email": "tomaschochola@tomaschochola.cz",
+      "name": "Tomáš Chochola",
+      "url": "https://github.com/tomaschochola"
+    }
+  ],
+  "description": "@tomaschochola/tomaschochola",
+  "devDependencies": {
+    "@tomaschochola/tooling-trimmer": "github:tomaschochola/tooling-trimmer#2.x"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/tomaschochola"
+  },
+  "homepage": "https://github.com/tomaschochola",
+  "keywords": [
+    "tomaschochola",
+    "TomasChochola",
+    "Tomas Chochola",
+    "Tomáš Chochola"
+  ],
+  "license": "CC-BY-ND-4.0",
+  "name": "@tomaschochola/tomaschochola",
+  "private": true,
+  "repository": "github:tomaschochola/tomaschochola",
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.0.0"
+}

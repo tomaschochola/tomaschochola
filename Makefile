@@ -24,16 +24,99 @@ never:
 	printf '%s\n' 'No default target. Run an explicit target' >&2
 	exit 1
 
+# Options
+
+DEVCONTAINER_FILTER := label=devcontainer.local_folder=$(CURDIR)
+
 # Goals
 
-.PHONY: all
-all:
+.PHONY: fix
+fix: trimmer_fix
+
+.PHONY: check
+check: trimmer_check audit
+
+.PHONY: audit
+audit: npm_audit
+
+.PHONY: deps_install
+deps_install: npm_install
+
+.PHONY: deps_update
+deps_update: npm_update
 
 .PHONY: clean
 clean:
 
+.PHONY: deps_clean
+deps_clean:
+	rm -rf ./node_modules
+
 .PHONY: distclean
-distclean: clean
+distclean: clean deps_clean
 
 .PHONY: nuke
-nuke: distclean
+nuke: down distclean
+
+.PHONY: trimmer_fix
+trimmer_fix: ./node_modules/.package-lock.json ./package.json ./package-lock.json
+	npm exec --ignore-scripts -- trimmer fix .
+
+.PHONY: trimmer_check
+trimmer_check: ./node_modules/.package-lock.json ./package.json ./package-lock.json
+	npm exec --ignore-scripts -- trimmer check .
+
+.PHONY: npm_audit
+npm_audit: ./node_modules/.package-lock.json ./package.json ./package-lock.json
+	npm audit --ignore-scripts --audit-level=high --install-links --include=prod --include=dev --include=peer --include=optional
+
+.PHONY: npm_install
+npm_install: ./package.json ./package-lock.json
+	npm ci --ignore-scripts --install-links --include=prod --include=dev --include=peer --include=optional
+
+.PHONY: npm_update
+npm_update: deps_clean ./package.json
+	npm update --ignore-scripts --install-links --include=prod --include=dev --include=peer --include=optional
+
+.PHONY: postcreate
+postcreate: deps_install
+
+.PHONY: devcontainer_check
+devcontainer_check:
+	devcontainer read-configuration --workspace-folder . >/dev/null
+	docker build --check --file ./.devcontainer/Dockerfile ./.devcontainer
+
+.PHONY: up
+up: devcontainer_check
+	devcontainer up --workspace-folder .
+
+.PHONY: devcontainer
+devcontainer: up
+	devcontainer exec --workspace-folder . /bin/bash
+
+.PHONY: status
+status:
+	docker container ls --all --filter "$(DEVCONTAINER_FILTER)"
+
+.PHONY: stop
+stop:
+	docker container ls --quiet --filter "$(DEVCONTAINER_FILTER)" | while IFS= read -r container; do docker container stop "$$container"; done
+
+.PHONY: restart
+restart:
+	docker container ls --all --quiet --filter "$(DEVCONTAINER_FILTER)" | while IFS= read -r container; do docker container restart "$$container"; done
+
+.PHONY: down
+down: stop
+	docker container ls --all --quiet --filter "$(DEVCONTAINER_FILTER)" | while IFS= read -r container; do docker container rm --volumes "$$container"; done
+
+.PHONY: rebuild
+rebuild: devcontainer_check down
+	devcontainer up --workspace-folder .
+
+.PHONY: rebuild_no_cache
+rebuild_no_cache: devcontainer_check down
+	devcontainer up --workspace-folder . --build-no-cache
+
+./node_modules/.package-lock.json: ./package.json ./package-lock.json
+	$(MAKE) npm_install
