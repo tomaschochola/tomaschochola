@@ -31,10 +31,13 @@ DEVCONTAINER_FILTER := label=devcontainer.local_folder=$(CURDIR)
 # Goals
 
 .PHONY: fix
-fix: trimmer_fix
+fix: prettier_fix trimmer_fix
 
 .PHONY: check
-check: trimmer_check audit
+check: trimmer_check lint audit
+
+.PHONY: lint
+lint: prettier_check
 
 .PHONY: audit
 audit: npm_audit
@@ -65,6 +68,14 @@ trimmer_fix: ./node_modules/.package-lock.json ./package.json ./package-lock.jso
 .PHONY: trimmer_check
 trimmer_check: ./node_modules/.package-lock.json ./package.json ./package-lock.json
 	npm exec --ignore-scripts -- trimmer check .
+
+.PHONY: prettier_fix
+prettier_fix: ./node_modules/.package-lock.json ./package.json ./package-lock.json ./prettier.config.js
+	npm exec --ignore-scripts -- prettier -w .
+
+.PHONY: prettier_check
+prettier_check: ./node_modules/.package-lock.json ./package.json ./package-lock.json ./prettier.config.js
+	npm exec --ignore-scripts -- prettier -c .
 
 .PHONY: npm_audit
 npm_audit: ./node_modules/.package-lock.json ./package.json ./package-lock.json
